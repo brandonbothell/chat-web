@@ -57,7 +57,7 @@
 
 <script>
   $(function () {
-    var socket = io();
+    var socket = io('https://macho.ninja:3000');
     $('form').submit(function(){
       socket.emit('chatMessage', $('#message').val());
       $('#message').val('');
