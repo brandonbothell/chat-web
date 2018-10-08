@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
   res.sendFile(path.resolve('public', 'index.html'))
 })
 
-io.sockets.on('connection', function (socket) {
+io.on('connection', function (socket) {
   console.log('A user connected: ' + socket.client.conn.remoteAddress)
 
   socket.on('disconnect', () => {
