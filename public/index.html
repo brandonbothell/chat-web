@@ -53,8 +53,20 @@
 </head>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
 <script>
-  var socket = io();
+  $(function () {
+    var socket = io();
+    $('form').submit(function(){
+      socket.emit('chatMessage', $('#message').val());
+      $('#message').val('');
+      return false;
+    });
+    socket.on('chatMessage', function(msg){
+      $('#messages').append($('<li>').text(msg));
+    });
+  });
 </script>
 
 <body>

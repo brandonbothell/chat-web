@@ -11,7 +11,7 @@ const server = https.createServer({
 }, app).listen(3000, function () {
   console.log(`Listening on port 3000`)
 })
-const io = socketio.listen(server)
+const io = socketio(server)
 
 app.get('/', function (req, res) {
   res.sendFile(path.resolve('public', 'index.html'))
