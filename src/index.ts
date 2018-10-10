@@ -54,10 +54,10 @@ createConnection({
       console.log('A user disconnected: ' + ip)
     })
 
-    ws.on('message', (message: string) => {
+    ws.on('message', async (message: string) => {
       const msg: { message: string, nickname: string } = JSON.parse(message)
 
-      const ban = banRepository.findOne({ where: { ip } })
+      const ban = await banRepository.findOne({ where: { ip } })
 
       if (ban) {
         console.log('Banned user attempted messaging: ' + ip)
