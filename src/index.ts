@@ -28,7 +28,7 @@ wss.on('connection', function (ws, req) {
     const msg: { message: string, nickname: string } = JSON.parse(message)
 
     if (msg.message) {
-      if (msg.message === '' || msg.nickname === '') {
+      if (msg.message === '' || msg.nickname === '' || msg.message.length > 2500) {
         return
       }
 
