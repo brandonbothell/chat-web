@@ -6,8 +6,10 @@ import { Route } from './routes'
 import { createConnection, getRepository } from 'typeorm'
 import { IPBan } from './entity'
 import { db } from './config'
+import * as bodyParser from 'body-parser'
 
 const app = express()
+app.use(bodyParser.json())
 const server = https.createServer({
   key: readFileSync('/etc/letsencrypt/live/www.macho.ninja/privkey.pem'),
   cert: readFileSync('/etc/letsencrypt/live/www.macho.ninja/cert.pem')
