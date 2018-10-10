@@ -10,7 +10,7 @@ const wss = new Websocket.Server({ server })
 
 function broadcast (data: any) {
   wss.clients.forEach(function each (client) {
-    if (client.readyState === WebSocket.OPEN) {
+    if (client.readyState === Websocket.OPEN) {
       client.send(data)
     }
   })
