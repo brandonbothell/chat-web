@@ -23,18 +23,20 @@ wss.on('connection', function (ws, req) {
     console.log('A user disconnected: ' + req.connection.remoteAddress)
   })
 
-  ws.on('message', (message: { message: string, nickname: string }) => {
-    if (message.message) {
-      if (message.message === '' || message.nickname === '') {
+  ws.on('message', (message: string) => {
+    const msg: { message: string, nickname: string } = JSON.parse(message)
+
+    if (msg.message) {
+      if (msg.message === '' || msg.nickname === '') {
         return
       }
 
-      console.log(`New message from ${message.nickname} (${req.connection.remoteAddress}): ${message.message}`)
+      console.log(`New message from ${msg.nickname} (${req.connection.remoteAddress}): ${msg.message}`)
       return broadcast(message)
     }
   })
 
-  ws.send({ message: 'Socket connected!', nickname: 'Socket' })
+  ws.send(JSON.stringify({ message: 'Socket connected!', nickname: 'Socket' }))
 })
 
 server.listen(3000, function () {
