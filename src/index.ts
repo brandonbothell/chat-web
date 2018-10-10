@@ -17,10 +17,10 @@ function broadcast (data: any) {
 }
 
 wss.on('connection', function (ws, req) {
-  console.log('A user connected: ' + req.socket.remoteAddress)
+  console.log('A user connected: ' + req.rawHeaders.find(header => header.toLowerCase().startsWith('x-forwarded-for')))
 
   ws.on('close', () => {
-    console.log('A user disconnected: ' + req.socket.remoteAddress)
+    console.log('A user disconnected: ' + req.connection.remoteAddress)
   })
 
   ws.on('message', (message: string) => {
