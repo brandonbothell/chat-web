@@ -28,8 +28,16 @@ wss.on('connection', function (ws, req) {
     const msg: { message: string, nickname: string } = JSON.parse(message)
 
     if (msg.message) {
-      if (msg.message === '' || msg.nickname === '' || msg.message.length > 2500) {
-        return
+      if (msg.message === '' || msg.nickname === '') {
+        return ws.send(JSON.stringify({ message: 'Wow, messing with code.', nickname: 'Socket' }))
+      }
+
+      if (msg.message.length > 2500) {
+        return ws.send(JSON.stringify({ message: 'Please send a message shorter than 2500 characters.', nickname: 'Socket' }))
+      }
+
+      if (msg.nickname.toLowerCase() === 'socket') {
+        return ws.send(JSON.stringify({ message: 'Nice try.', nickname: 'Socket' }))
       }
 
       console.log(`New message from ${msg.nickname} (${ip}): ${msg.message}`)
