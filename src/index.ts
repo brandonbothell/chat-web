@@ -32,7 +32,7 @@ wss.on('connection', function (ws, req) {
         return
       }
 
-      console.log(`New message from ${msg.nickname} (ip): ${msg.message}`)
+      console.log(`New message from ${msg.nickname} (${ip}): ${msg.message}`)
       return broadcast(message)
     }
   })
