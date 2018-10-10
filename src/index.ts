@@ -39,9 +39,9 @@ createConnection({
 
   const banRepository = getRepository(IPBan)
 
-  wss.on('connection', function (ws, req) {
+  wss.on('connection', async (ws, req) => {
     const ip = req.rawHeaders[req.rawHeaders.indexOf(req.rawHeaders.find(header => header.toLowerCase().startsWith('x-forwarded-for'))) + 1]
-    const ban = banRepository.findOne({ where: { ip } })
+    const ban = await banRepository.findOne({ where: { ip } })
 
     if (ban) {
       console.log('Banned user attempted connecting: ' + ip)
