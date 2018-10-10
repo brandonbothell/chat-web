@@ -10,9 +10,12 @@
     "start": "tsc && node out/index"
   },
   "dependencies": {
+    "express": "^4.16.3",
+    "typeorm": "^0.2.7",
     "ws": "^6.1.0"
   },
   "devDependencies": {
+    "@types/express": "^4.16.0",
     "@types/ws": "^6.0.1",
     "tslint": "^5.11.0",
     "tslint-config-standard": "^8.0.1",
