@@ -28,7 +28,7 @@ wss.on('connection', function (ws, req) {
     const msg: { message: string, nickname: string } = JSON.parse(message)
 
     if (msg.message) {
-      if (msg.message === '' || msg.nickname === '') {
+      if (msg.message === '' || msg.nickname === null || msg.nickname === '' || msg.nickname === undefined) {
         return ws.send(JSON.stringify({ message: 'Wow, messing with code.', nickname: 'Socket' }))
       }
 
