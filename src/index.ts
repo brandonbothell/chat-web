@@ -25,7 +25,7 @@ wss.on('connection', function (ws, req) {
 
   ws.on('message', (message: string) => {
     if (message.startsWith('message:')) {
-      const msg = message.substring(9, message.length)
+      const msg = message.substring(8, message.length)
 
       if (msg === '') {
         return
