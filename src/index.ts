@@ -1,9 +1,6 @@
-import * as express from 'express'
 import { readFileSync } from 'fs'
 import * as https from 'https'
-import * as socketio from 'socket.io'
 import * as Websocket from 'ws'
-import * as path from 'path'
 
 const server = https.createServer({
   key: readFileSync('/etc/letsencrypt/live/www.macho.ninja/privkey.pem'),
@@ -11,9 +8,13 @@ const server = https.createServer({
 })
 const wss = new Websocket.Server({ server })
 
-/* app.get('/', function (req, res) {
-  res.sendFile(path.resolve('public', 'index.html'))
-}) */
+function broadcast (data: any) {
+  wss.clients.forEach(function each (client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data)
+    }
+  })
+}
 
 wss.on('connection', function (ws, req) {
   console.log('A user connected: ' + req.connection.remoteAddress)
@@ -22,13 +23,17 @@ wss.on('connection', function (ws, req) {
     console.log('A user disconnected: ' + req.connection.remoteAddress)
   })
 
-  ws.on('chatMessage', (message: string) => {
-    if (message === '') {
-      return
-    }
+  ws.on('message', (message: string) => {
+    if (message.startsWith('message:')) {
+      const msg = message.substring(9, message.length)
 
-    console.log(`New message from ${req.connection.remoteAddress}: ${message}`)
-    wss.emit('chatMessage', message)
+      if (msg === '') {
+        return
+      }
+
+      console.log(`New message from ${req.connection.remoteAddress}: ${msg}`)
+      return broadcast(message)
+    }
   })
 
   ws.send('websocket connected')
