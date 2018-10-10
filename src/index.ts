@@ -31,7 +31,7 @@ createConnection({
   username: db.user,
   password: db.password,
   database: db.database,
-  entities: [ './entity/**/*.js' ]
+  entities: [ IPBan ]
 }).then(connection => {
   return connection.synchronize()
 }).then(() => {
