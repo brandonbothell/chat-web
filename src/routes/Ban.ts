@@ -6,6 +6,18 @@ import { code } from '../config'
 export async function BanRoutes (app: Application) {
   const banRepository = getRepository(IPBan)
 
+  app.get('/api/ban', async (req, res) => {
+    const reqCode = req.query.code
+
+    if (reqCode !== code) {
+      return res.send({ error: 'invalid_code', success: false })
+    }
+
+    const bans = await banRepository.find()
+
+    res.send(bans)
+  })
+
   app.post('/api/ban', async (req, res) => {
     const reqCode = req.query.code
 
