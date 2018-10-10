@@ -17,10 +17,10 @@ function broadcast (data: any) {
 }
 
 wss.on('connection', function (ws, req) {
-  console.log('A user connected: ' + req.connection.remoteAddress)
+  console.log('A user connected: ' + req.socket.remoteAddress)
 
   ws.on('close', () => {
-    console.log('A user disconnected: ' + req.connection.remoteAddress)
+    console.log('A user disconnected: ' + req.socket.remoteAddress)
   })
 
   ws.on('message', (message: string) => {
