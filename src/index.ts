@@ -5,12 +5,9 @@ import * as socketio from 'socket.io'
 import * as Websocket from 'ws'
 import * as path from 'path'
 
-const app = express()
 const server = https.createServer({
   key: readFileSync('/etc/letsencrypt/live/www.macho.ninja/privkey.pem'),
   cert: readFileSync('/etc/letsencrypt/live/www.macho.ninja/cert.pem')
-}, app).listen(3000, function () {
-  console.log(`Listening on port 3000`)
 })
 const wss = new Websocket.Server({ server })
 
@@ -35,4 +32,8 @@ wss.on('connection', function (ws, req) {
   })
 
   ws.send('websocket connected')
+})
+
+server.listen(3000, function () {
+  console.log(`Listening on port 3000`)
 })
