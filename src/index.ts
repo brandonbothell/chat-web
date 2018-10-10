@@ -14,9 +14,9 @@ const server = https.createServer({
 })
 const wss = new Websocket.Server({ server })
 
-app.get('/', function (req, res) {
+/* app.get('/', function (req, res) {
   res.sendFile(path.resolve('public', 'index.html'))
-})
+}) */
 
 wss.on('connection', function (ws, req) {
   console.log('A user connected: ' + req.connection.remoteAddress)
@@ -33,4 +33,6 @@ wss.on('connection', function (ws, req) {
     console.log(`New message from ${req.connection.remoteAddress}: ${message}`)
     wss.emit('chatMessage', message)
   })
+
+  ws.send('websocket connected')
 })
