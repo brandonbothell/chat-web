@@ -17,10 +17,11 @@ function broadcast (data: any) {
 }
 
 wss.on('connection', function (ws, req) {
-  console.log('A user connected: ' + req.rawHeaders[req.rawHeaders.indexOf(req.rawHeaders.find(header => header.toLowerCase().startsWith('x-forwarded-for'))) + 1])
+  const ip = req.rawHeaders[req.rawHeaders.indexOf(req.rawHeaders.find(header => header.toLowerCase().startsWith('x-forwarded-for'))) + 1]
+  console.log('A user connected: ' + ip)
 
   ws.on('close', () => {
-    console.log('A user disconnected: ' + req.connection.remoteAddress)
+    console.log('A user disconnected: ' + ip)
   })
 
   ws.on('message', (message: string) => {
@@ -31,7 +32,7 @@ wss.on('connection', function (ws, req) {
         return
       }
 
-      console.log(`New message from ${msg.nickname} (${req.connection.remoteAddress}): ${msg.message}`)
+      console.log(`New message from ${msg.nickname} (ip): ${msg.message}`)
       return broadcast(message)
     }
   })
