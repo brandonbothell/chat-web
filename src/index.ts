@@ -19,7 +19,7 @@ function broadcast (data: any) {
 wss.on('connection', function (ws, req) {
   console.log('A user connected: ' + req.connection.remoteAddress)
 
-  ws.on('disconnect', () => {
+  ws.on('close', () => {
     console.log('A user disconnected: ' + req.connection.remoteAddress)
   })
 
